@@ -51,6 +51,7 @@ const InputField = forwardRef(
           ref={ref}
           type="text"
           id={id}
+          maxLength={16}
           className={`
             w-full py-3.5 px-4
             text-center text-xl

@@ -1,6 +1,13 @@
 import InputField from "./InputField";
 import { Copy } from "lucide-react";
 
+// Format helper: round to 6 decimals and trim trailing zeros
+function formatResult(val) {
+  if (typeof val !== "number" || !isFinite(val)) return "--";
+  if (Number.isInteger(val)) return String(val);
+  return String(parseFloat(val.toFixed(6)));
+}
+
 /**
  * EquationStrip Component
  *
@@ -38,6 +45,16 @@ function EquationStrip({
   onCopyResult,
   onCalculate,
 }) {
+  const displayValue = result !== null ? formatResult(result) : "--";
+
+  const handleCopy = async () => {
+    try {
+      if (displayValue !== "--") {
+        await navigator.clipboard.writeText(displayValue);
+      }
+    } catch {}
+  };
+
   return (
     <section
       className="
@@ -99,25 +116,25 @@ function EquationStrip({
         </span>
 
         {/* Result Display */}
-        <div className="flex-1 min-w-[160px] max-w-[220px]">
+        <div className="flex-shrink flex-grow-0 min-w-[140px] max-w-fit ">
           <div
             className="
-              text-white py-4 px-5
-              rounded-[var(--border-radius)]
+              text-white py-3 px-5
+              rounded-xl
               font-bold text-lg
               shadow-[var(--shadow-md)]
               flex items-center gap-2 justify-center
               font-[var(--font-mono)]
               bg-gradient-to-br from-[var(--accent-primary)] to-[var(--accent-hover)]
+              whitespace-nowrap
+              transition-all
             "
             aria-live="polite"
             aria-atomic="true"
             role="status"
           >
-            <span className="text-sm font-medium opacity-90">Result:</span>
-            <span className="text-2xl tracking-tight">
-              {result !== null ? result : "--"}
-            </span>
+            <span className="text-sm font-medium opacity-90 mr-1">Result:</span>
+            <span className="text-2xl tracking-tight">{displayValue}</span>
             {result !== null && (
               <button
                 type="button"
@@ -129,7 +146,7 @@ function EquationStrip({
                   hover:bg-white/30 
                   active:scale-95
                 "
-                onClick={onCopyResult}
+                onClick={handleCopy}
                 aria-label="Copy result to clipboard"
                 title="Copy to clipboard"
               >
@@ -144,17 +161,17 @@ function EquationStrip({
           <button
             type="button"
             className="
-            text-white rounded-[var(--border-radius)]
-            py-5 px-10 text-base font-semibold
-            cursor-pointer
-            transition-all duration-300
-            bg-[var(--accent-primary)]
-            shadow-[var(--shadow-sm)]
-            font-[var(--font-family)]
-            hover:bg-[var(--accent-hover)] hover:shadow-[var(--shadow-md)]
-            active:translate-y-0
-            focus-visible:outline focus-visible:outline-3 focus-visible:outline-[var(--accent-light)] focus-visible:outline-offset-4
-          "
+              text-white rounded-[var(--border-radius)]
+              py-4 px-10 text-base font-semibold
+              cursor-pointer
+              transition-all duration-300
+              bg-[var(--accent-primary)]
+              shadow-[var(--shadow-sm)]
+              font-[var(--font-family)]
+              hover:bg-[var(--accent-hover)] hover:shadow-[var(--shadow-md)]
+              active:translate-y-0
+              focus-visible:outline focus-visible:outline-3 focus-visible:outline-[var(--accent-light)] focus-visible:outline-offset-4
+            "
             onClick={onCalculate}
           >
             Calculate
