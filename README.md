@@ -1,6 +1,6 @@
 # 🧮 Sum Calculator App
 
-**Demo**: _(điền link deploy của bạn nếu có)_
+**Demo**: https://ia03-sum-calculator.vercel.app/
 
 <p align="center">
   <img src="./src/assets/light-mode.png" alt="Light Mode Screenshot" width="46%" />
