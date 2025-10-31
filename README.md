@@ -26,7 +26,7 @@
 
 ```bash
 # Clone về máy
- git clone <repo của bạn>
+ git clone https://github.com/MinhNguyenCG/ia03-sum-calculator
  cd sum-calculator-app
 # Cài dependencies
  npm install
